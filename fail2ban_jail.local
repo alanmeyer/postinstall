@@ -1,0 +1,38 @@
+[pureftpd]
+enabled  = true
+port     = ftp
+filter   = pureftpd
+sendmail-whois[name=pureftpd, dest=administrator@ocmeyer.com, sender=fail2ban@ocmeyer.com]
+logpath  = /var/log/syslog
+maxretry = 3
+
+[dovecot]
+enabled = true
+filter = dovecot
+action = iptables-multiport[name=Dovecot, port="110,995,143,993", protocol=tcp]
+sendmail-whois[name=Dovecot, dest=administrator@ocmeyer.com, sender=fail2ban@ocmeyer.com]
+logpath = /var/log/mail.log
+maxretry = 3
+
+[dovecot-pop3imap]
+enabled = true
+filter = dovecot-pop3imap
+action = iptables-multiport[name=dovecot-pop3imap, port="pop3,pop3s,imap,imaps", protocol=tcp]
+sendmail-whois[name=Dovecot-pop3imap, dest=administrator@ocmeyer.com, sender=fail2ban@ocmeyer.com]
+logpath = /var/log/mail.log
+maxretry = 3
+
+[postfix-sasl]
+enabled  = true
+port     = smtp
+filter   = postfix-sasl
+sendmail-whois[name=postfix-sasl, dest=administrator@ocmeyer.com, sender=fail2ban@ocmeyer.com]
+logpath  = /var/log/mail.log
+maxretry = 3
+
+[apache-phpmyadmin]
+enabled  = true
+port     = http,https
+filter   = apache-phpmyadmin
+logpath  = /var/log/apache*/*error.log
+maxretry = 3

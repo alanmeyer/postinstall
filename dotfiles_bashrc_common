@@ -1,0 +1,147 @@
+#--------------------------------------------------------------------------
+#
+# File:           .bashrc_common
+# Creator:        Alan T. Meyer (alanmeyer -AT(@)- yahoo DOT com)
+# Creation Date:  10/01/2006
+# Last Modified:  07/06/2014
+#
+# Description:
+#   Additional .bashrc setup information that is useful by most
+#   users in the system.  Allows a common source location to adjust
+#   login properties for all users
+#
+# Instructions:
+#   At the bottom of each user's .bashrc file, place the following line:
+#     source      ~/.bashrc.d/bashrc_common
+#
+# Source:
+#   https://github.com/alanmeyer/postinstall-14.04
+#
+# License:
+#   Released under the 'Alan Beer' license.
+#   In summary:  If you find this source useful, then
+#   feel free to use it as you desire.  Also, feel free
+#   to paypal me a donation for beer. (use listed email)
+#
+#--------------------------------------------------------------------------
+
+
+#----------------------------------
+#             Prompt
+#----------------------------------
+
+export COLOR_NONE='\[\033[00m\]'
+export COLOR_NORM='\[\033[01;00;0m\]'
+export COLOR_BLUE='\[\033[01;34m\]'
+export COLOR_YELO='\[\033[01;33m\]'
+export COLOR_WHIT='\[\033[01;37m\]'
+export COLOR_PURP='\[\033[00;35m\]'
+export COLOR_RRED='\[\033[01;31m\]'
+export COLOR_GREN='\[\033[01;32m\]'
+export COLOR_GRAY='\[\033[01;30m\]'
+export COLOR_PINK='\[\033[01;35m\]'
+export COLOR_CYAN='\[\033[01;36m\]'
+
+# Assign the prompt colors here
+# assign a different color to the user name if root
+export COLOR_MACH=$COLOR_PURP
+export COLOR_DIRC=$COLOR_BLUE
+if [ "$USER" = "root" ] ; then
+    export COLOR_USER=$COLOR_RRED
+else
+    export COLOR_USER=$COLOR_BLUE
+fi
+
+#Create the prompt
+PS1="$COLOR_MACH[\h]$COLOR_USER[\u]$COLOR_DIRC[\w]>$COLOR_NONE$COLOR_NORM"
+
+#----------------------------------
+#             Path
+#----------------------------------
+PATH=$PATH:$HOME/bin:$HOME/scripts
+
+#----------------------------------
+#             Locale
+#----------------------------------
+# Important when running adduser
+export LANGUAGE="en"
+export LANG="C"
+export LC_MESSAGES="C"
+
+#----------------------------------
+#             Alias
+#----------------------------------
+
+alias a='alias'
+alias rd='rmdir'
+alias md='mkdir'
+alias dir='ls -la'
+alias cls='clear'
+alias grep='grep -i'
+alias h='history'
+
+
+#----------------------------------
+#             Misc
+#----------------------------------
+
+# cd auto-complete only shows directories
+complete -d cd
+
+# ls shows colors for folders / links
+export LS_OPTIONS='--color=auto'
+eval "`dircolors`"
+alias ls='ls $LS_OPTIONS'
+alias ll='ls $LS_OPTIONS -l'
+alias l='ls $LS_OPTIONS -lA'
+
+
+#----------------------------------
+#           History
+#----------------------------------
+# Taken from:
+# http://www.onerussian.com/Linux/.files/.bashrc_history
+# Saves all history to .bash_history.archive
+
+# Creates file if !exist
+if [ ! -f ~/.bash_history ];
+then
+   touch ~/.bash_history
+fi
+
+if [ "$PS1" ] ; then # interactive shell
+    export STARTTIME=`date` \
+           HISTORYDUMP=0
+    shopt -s cmdhist histappend
+
+    # Next function really stores the history logs. Besides that if you want to store whatever you have so far
+    # you can call this function and it will save increment from the last call to it.
+    archive_history()
+    {
+        TFILE=${HISTFILE}.$$.temp
+        CURTIME=`date`
+        CURTTY=`tty`
+        #STAMP
+        HISTORYDUMP=$(($HISTORYDUMP+1))
+        # Title
+        echo "#$USER@${HOSTNAME} [ ${STARTTIME} - ${CURTIME} ]:$HISTORYDUMP ($CURTTY) ----" >| $TFILE
+        # Fresh tasty history
+        history -a ${TFILE}
+        # Append it to the archive
+        cat ${TFILE} >> ${HISTFILE}.archive
+        # Adjust history file itself
+        # of course we need to dump to some temp file and then rename...
+        cat ${HISTFILE} ${TFILE} | tail -${HISTSIZE} >| ${HISTFILE}.$$
+        mv -f ${HISTFILE}.$$ ${HISTFILE}
+        # clean up after yourself - to be obsessive, remove the other tmp file as well -
+        # - might happen if there were no permission to move it at above point
+        rm -rf ${TFILE} ${HISTFILE}.$$
+    }
+
+    trap 'archive_history' EXIT
+    unset IGNOREEOF
+
+fi
+
+#--------------------------------------------------------------------------
+#--------------------------------------------------------------------------

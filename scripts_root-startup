@@ -1,0 +1,32 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          root-startup
+# Required-Start:    ~root/scripts/root-startup.sh
+# Required-Stop:     
+# Default-Start:
+# Default-Stop:      
+# Short-Description: Run the root-startup.sh script at startup
+### END INIT INFO
+
+case $1 in
+    start)
+        ~root/scripts/root-startup.sh
+        exit 0
+        ;;
+    stop)
+        exit 0
+        ;;
+    reload)
+        exit 0
+        ;;
+    restart|force-reload)
+        exit 0
+        ;;
+    status)
+        ;;
+    *)
+        echo "Usage: /etc/init.d/root-startup {start|stop|reload|restart|force-reload|status}"
+        exit 1
+        ;;
+esac

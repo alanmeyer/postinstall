@@ -1,0 +1,11 @@
+root:                 administrator
+postmaster:           administrator
+mailer-daemon:        postmaster
+nobody:               postmaster
+hostmaster:           postmaster
+usenet:               postmaster
+news:                 postmaster
+webmaster:            postmaster
+www:                  postmaster
+ftp:                  postmaster
+abuse:                postmaster
