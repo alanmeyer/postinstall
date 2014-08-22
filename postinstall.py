@@ -374,10 +374,8 @@ def main(argv):
             showexec ("dotfiles: update ownership", "chown $USERNAME:$USERNAME $HOME/.bashrc")
             showexec ("dotfiles: copy to skel", "cp -f $HOME/.bashrc /etc/skel")
         if (config.has_option("dotfiles", "bashrc_common")):
-            showexec ("dotfiles: create the ~/.bashrc.d subfolder", "mkdir -p $HOME/.bashrc.d")
-            showexec ("dotfiles: get bash prompt configuration file", _WGET+" -O $HOME/.bashrc.d/bashrc_common "+my_postinstall+config.get("dotfiles", "bashrc_common"))
-            showexec ("dotfiles: update ownership", "chown $USERNAME:$USERNAME $HOME/.bashrc.d/bashrc_common")
-            showexec ("dotfiles: copy to skel", "cp -f -r $HOME/.bashrc.d /etc/skel")
+            showexec ("dotfiles: create /etc/profile.d (if needed)", "mkdir -p /etc/profile.d")
+            showexec ("dotfiles: get bash comomon configuration file", _WGET+" -O /etc/profile.d/bashrc_common "+my_postinstall+config.get("dotfiles", "bashrc_common"))
         # Create scripts and bin folders
         showexec ("dotfiles: create the $HOME/bin subfolder", "mkdir -p $HOME/bin")
         showexec ("dotfiles: create the $HOME/scripts subfolder", "mkdir -p $HOME/scripts")
