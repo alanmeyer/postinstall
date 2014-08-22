@@ -1,9 +1,9 @@
 #--------------------------------------------------------------------------
 #
 # File:           .bashrc_common
-# Creator:        Alan T. Meyer (alanmeyer -AT(@)- yahoo DOT com)
-# Creation Date:  10/01/2006
-# Last Modified:  07/06/2014
+# Creator:        Alan T. Meyer (alanmeyer at yahoo)
+# Creation Date:  2006-10-01
+# Last Modified:  2014-08-22
 #
 # Description:
 #   Additional .bashrc setup information that is useful by most
@@ -12,10 +12,10 @@
 #
 # Instructions:
 #   At the bottom of each user's .bashrc file, place the following line:
-#     source      ~/.bashrc.d/bashrc_common
+#     source      <path-to>/bashrc_common
 #
 # Source:
-#   https://github.com/alanmeyer/postinstall-14.04
+#   https://github.com/alanmeyer/postinstall
 #
 # License:
 #   Released under the 'Alan Beer' license.
