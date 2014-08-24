@@ -402,11 +402,16 @@ def main(argv):
 
     # Media files
     if (config.has_section("media")):
-        showexec ("media: create images directory", "mkdir -p /media/images")
-        for media_index, media_name in config.items("media"):
+        for media_name, media_folder in config.items("media"):
             name=media_name[len("media_"):]
-            showexec ("media: get "+media_index, _WGET+" -O /media/images/"+name+" "+my_postinstall+media_name)
-        showexec ("media: update image directory privlidges", "chmod -R +644 /media/images")
+            showexec ("media: get "+media_name,     "mkdir -p "+media_folder+" &&"
+                                                    _WGET+" -O "+media_folder+"/"+name+" &&"  
+                                                    "chmod -R +644 "+media_folder)
+            if (name.endswith(".zip")):
+                    showexec ("media: unzip "+media_index,  "unzip -o   "+media_folder+" "+media_folder+"/"name &&
+                                                            "rm "+media_folder+"/"name)
+            if (name.endswith(".gz")):
+                    showexec ("media: gzip  "+media_index, "gzip -r -f -d "+media_folder+"/"name)
 
     # Scripts
     if (config.has_section("scripts")):
