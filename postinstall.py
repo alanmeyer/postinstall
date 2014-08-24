@@ -404,14 +404,14 @@ def main(argv):
     if (config.has_section("media")):
         for media_name, media_folder in config.items("media"):
             name=media_name[len("media_"):]
-            showexec ("media: get "+media_name,     "mkdir -p "+media_folder+" &&"
-                                                    _WGET+" -O "+media_folder+"/"+name+" &&"  
+            showexec ("media: get "+media_name,     "mkdir -p "+media_folder+" && "             \
+                                                    _WGET+" -O "+media_folder+"/"+name+" && "   \
                                                     "chmod -R +644 "+media_folder)
             if (name.endswith(".zip")):
-                    showexec ("media: unzip "+media_index,  "unzip -o   "+media_folder+" "+media_folder+"/"name &&
-                                                            "rm "+media_folder+"/"name)
+                    showexec ("media: unzip "+media_index,  "unzip -o "+media_folder+" "+media_folder+"/"+name " && " \
+                                                            "rm "+media_folder+"/"+name)
             if (name.endswith(".gz")):
-                    showexec ("media: gzip  "+media_index, "gzip -r -f -d "+media_folder+"/"name)
+                    showexec ("media: gzip  "+media_index, "gzip -r -f -d "+media_folder+"/"+name)
 
     # Scripts
     if (config.has_section("scripts")):
