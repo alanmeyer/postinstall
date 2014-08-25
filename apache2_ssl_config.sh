@@ -29,7 +29,7 @@ mv apache2_ssl_ca-bundle.pem    $APACHE_SSL_DIR/ca-bundle.pem
 mv apache2_ssl_000-default.conf $APACHE_SITES_DIR/000-default.conf
 
 sed -i 's,\(ServerName\).*,\1 '"$WEB"',g'             $APACHE_SITES_DIR/000-default.conf
-sed -i 's,\(Redirect\).*,\1 / https://'"$WEB"',g'     $APACHE_SITES_DIR/000-default.conf
+sed -i 's,\(Redirect\).*,\1 / https://'"$WEB"'/,g'    $APACHE_SITES_DIR/000-default.conf
 sed -i 's,\(ServerAdmin\).*,\1 webmaster@'"$MAIL"',g' $APACHE_SITES_DIR/000-default.conf
 
 wget $GIT_SHARE/apache2_ssl_private-encrypted.key
