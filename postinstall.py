@@ -19,7 +19,7 @@ import ConfigParser
 
 # Global variables
 #-----------------------------------------------------------------------------
-_VERSION            = "0.20.AM"
+_VERSION            = "1.00.AM"
 _DEBUG              = 1
 
 # The following should be set in the configuration file
@@ -44,7 +44,8 @@ _APT_GET_UPG_OPTS   = _NO_FRONTEND + _APT_GET + _FORCE_YES + _PKG_OPTIONS
 _APT_REMOVE         = _APT_GET_OPTS     + "-f remove"
 _APT_INSTALL        = _APT_GET_OPTS     + "-f install"
 _APT_UPDATE         = _APT_GET_OPTS     + "   update"
-_APT_UPGRADE        = _APT_GET_UPG_OPTS + "   upgrade"
+#_APT_UPGRADE        = _APT_GET_UPG_OPTS + "   upgrade"
+_APT_UPGRADE        = _APT_GET_UPG_OPTS + "   dist-upgrade"
 _APT_ADD            = "add-apt-repository -y"
 _APT_KEY            = "apt-key adv --keyserver keyserver.ubuntu.com --recv-keys"
 _USER_ADD           = "adduser --disabled-password --gecos ,,,"
@@ -355,7 +356,7 @@ def main(argv):
     showexec ("update repositories", _APT_UPDATE)
     
     # Upgrade system
-    showexec ("system upgrade (~20 mins, please be patient...)", _APT_UPGRADE)
+    showexec ("system upgrade (please be patient...)", _APT_UPGRADE)
 
     # Parse and install packages
     showexec ("packages: log before ", "dpkg -l > " + _DPKG_LOG_BEFORE)
