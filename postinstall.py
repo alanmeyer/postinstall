@@ -21,6 +21,7 @@ import ConfigParser
 #-----------------------------------------------------------------------------
 _VERSION            = "1.10.AM"
 _DEBUG              = 1
+_LINUX_VERSION      = "6.9"
 
 # The following should be set in the configuration file
 # These are just placeholder values or for missing info in the config file
@@ -48,6 +49,15 @@ _APT_UPDATE         = _APT_GET_OPTS     + "   update"
 _APT_UPGRADE        = _APT_GET_UPG_OPTS + "   dist-upgrade"
 _APT_ADD            = "add-apt-repository -y"
 _APT_KEY            = "apt-key adv --keyserver keyserver.ubuntu.com --recv-keys"
+
+_YUM_GET_UP_OPTS    = "-y -q"
+_YUM_UPDATE         = _YUM_GET_UP_OPTS + "  update"
+_YUM_CHECK_UPADTE   = _YUM_GET_UP_OPTS + "  update"
+_YUM_ERASE          = _YUM_GET_UP_OPTS + "  erase"
+_YUM_INSTALL        = _YUM_GET_UP_OPTS + "  install"
+_YUM_GI             = _YUM_GET_UP_OPTS + "  groupinstall"
+_YUM_GR             = _YUM_GET_UP_OPTS + "  groupremove"
+
 _USER_ADD           = "adduser --disabled-password --gecos ,,,"
 _GROUP_ADD          = "addgroup"
 _USER_MOD_GROUP     = "usermod -a -G"
@@ -335,9 +345,9 @@ def main(argv):
         showexec ("Script should be run as root", "whoami", exitonerror = 1)
         
     # Is it the right OS version ?
-    _UBUNTU_VERSION = platform.linux_distribution()[2]
-    if (_UBUNTU_VERSION != my_os_version):
-        showexec (_UBUNTU_VERSION)
+    _LINUX_VERSION = platform.linux_distribution()[2]
+    if (_LINUX_VERSION != my_os_version):
+        showexec (_LINUX_VERSION)
         showexec ("Script only for " + my_os_version, "lsb_release -a", exitonerror = 1)
     
 
@@ -352,21 +362,27 @@ def main(argv):
         name=action_name[len("action_"):]
         showexec ("preaction: "+name, action_cmd)
         
-    # Update repos
-    showexec ("update repositories", _APT_UPDATE)
-    
-    # Upgrade system
-    showexec ("system upgrade (please be patient...)", _APT_UPGRADE)
+    # Update system
+    showexec ("system check update (please be patient...)", _YUM_CHECK_UPDATE)
+
+    # Update system
+    showexec ("system update (please be patient...)", _YUM_UPDATE)
 
     # Parse and install packages
-    showexec ("packages: log before ", "dpkg -l > " + _DPKG_LOG_BEFORE)
+    #showexec ("packages: log before ", "dpkg -l > " + _DPKG_LOG_BEFORE)
     for pkg_type, pkg_list in config.items("packages"):
         if (pkg_type.startswith("remove_")):
             packages=pkg_type[len("remove_"):]
-            showexec ("packages: remove "+packages, _APT_REMOVE+" "+pkg_list)
+            showexec ("packages: remove "+packages, _YUM_ERASE+" "+pkg_list)
+        elif (pkg_type.startswith("groupremove_")):
+            packages=pkg_type[len("groupremove_"):]
+            showexec ("packages: group remove "+packages, _YUM_GR+" "+pkg_list)
+        elif (pkg_type.startswith("groupinstall_")):
+            packages=pkg_type[len("groupinstall_"):]
+            showexec ("packages: group install "+packages, _YUM_GI+" "+pkg_list)
         else:
-            showexec ("packages: install "+pkg_type, _APT_INSTALL+" "+pkg_list)
-    showexec ("packages: log after ", "dpkg -l > " + _DPKG_LOG_AFTER)
+            showexec ("packages: install "+pkg_type, _YUM_INSTALL+" "+pkg_list)
+    #showexec ("packages: log after ", "dpkg -l > " + _DPKG_LOG_AFTER)
     
     # Download and install dotfiles: vimrc, prompt...
     if (config.has_section("dotfiles")):
