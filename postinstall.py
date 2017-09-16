@@ -347,7 +347,7 @@ def main(argv):
     # Is it the right OS version ?
     _LINUX_VERSION = platform.linux_distribution()[2]
     if (_LINUX_VERSION != my_os_version):
-        showexec (_LINUX_VERSION)
+        showexec (_LINUX_VERSION, "true")
         showexec ("Script only for " + my_os_version, "lsb_release -a", exitonerror = 1)
     
 
