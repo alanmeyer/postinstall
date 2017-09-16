@@ -348,7 +348,7 @@ def main(argv):
     _LINUX_VERSION = platform.linux_distribution()[2]
     if (_LINUX_VERSION != my_os_version):
         showexec (_LINUX_VERSION, "true")
-        showexec ("Script only for " + my_os_version, "lsb_release -a", exitonerror = 1)
+        showexec ("OS should be: " + my_os_version + " but is: " + _LINUX_VERSION, "lsb_release -a", exitonerror = 1)
     
 
     # Set the hostname & IP
