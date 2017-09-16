@@ -19,7 +19,7 @@ import ConfigParser
 
 # Global variables
 #-----------------------------------------------------------------------------
-_VERSION            = "1.00.AM"
+_VERSION            = "1.10.AM"
 _DEBUG              = 1
 
 # The following should be set in the configuration file
