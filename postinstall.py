@@ -356,7 +356,7 @@ def main(argv):
     showexec ("hosts: save original hosts file","cp -n /etc/hosts /etc/hosts.orig")
     showexec ("hosts: ip update", "sed -i 's/^"+my_ip+" .*/"+my_ip+" "+my_fqdn+" "+my_hostname+" localhost.localdomain localhost/g' /etc/hosts")
     showexec ("hosts: update hostname","echo \""+my_hostname+"\" | tee /etc/hostname")
-    showexec ("hosts: hostname service restart","service hostname restart")
+    showexec ("hosts: hostname service restart","service network restart")
 
     # Parse and exec pre-actions
     for action_name, action_cmd in config.items("preactions"):
