@@ -436,20 +436,20 @@ def main(argv):
             if (name.startswith("folders_")):
                 local=name[len("folders_"):]
                 folder, owner, group, rights = values.split(",")
-                showexec ("folders: "+local+" create", "mkdir -p "+folder)
+                showexec ("folders: "+local+" create: "+folder, "mkdir -p "+folder)
                 showexec ("folders: "+local+" owner:group: "+owner+":"+group, "chown "+owner+":"+group+" "+folder)
-                showexec ("folders: "+local+" rights:      "+rights, "chmod 600 "+folder)
+                showexec ("folders: "+local+" rights:      "+rights, "chmod "+rights+" "+folder)
 
     # Files
     if (config.has_section("files")):
-        for name, values in config.items("files"):
-            if (name.startswith("files_")):
-                local=name[len("files_"):]
+        for fname, values in config.items("files"):
+            if (fname.startswith("files_")):
+                local=fname[len("files_"):]
                 name, folder, owner, group, rights = values.split(",")
                 fqname=folder+"/"+name
                 showexec ("file: "+local+" save to:     "+fqname, "mkdir -p "+folder+" && "+_WGET+" -O "+fqname+" "+local)
                 showexec ("file: "+local+" owner:group: "+owner+":"+group, "chown "+owner+":"+group+" "+fqname)
-                showexec ("file: "+local+" rights:      "+rights, "chmod 600 "+fqname)
+                showexec ("file: "+local+" rights:      "+rights, "chmod "+rights+" "+fqname)
 
     # Config changes
     if (config.has_section("config")):
