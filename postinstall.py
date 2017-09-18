@@ -1,4 +1,4 @@
-!/usr/bin/env python
+#!/usr/bin/env python
 # Alan Meyer
 # https://github.com/alanmeyer/postinstall
 #
