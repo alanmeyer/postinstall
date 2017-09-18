@@ -447,9 +447,9 @@ def main(argv):
                 local=fname[len("files_"):]
                 name, folder, owner, group, rights = values.split(",")
                 fqname=folder+"/"+name
-                showexec ("file: "+local+" save to:     "+fqname, "mkdir -p "+folder+" && "+_WGET+" -O "+fqname+" "+my_postinstall+fname)
-                showexec ("file: "+local+" owner:group: "+owner+":"+group, "chown "+owner+":"+group+" "+fqname)
-                showexec ("file: "+local+" rights:      "+rights, "chmod "+rights+" "+fqname)
+                showexec ("files: "+local+" save to:     "+fqname, "mkdir -p "+folder+" && "+_WGET+" -O "+fqname+" "+my_postinstall+fname)
+                showexec ("files: "+local+" owner:group: "+owner+":"+group, "chown "+owner+":"+group+" "+fqname)
+                showexec ("files: "+local+" rights:      "+rights, "chmod "+rights+" "+fqname)
 
     # Config changes
     if (config.has_section("config")):
