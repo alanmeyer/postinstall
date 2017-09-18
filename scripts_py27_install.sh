@@ -16,6 +16,14 @@ echo $MY_DATE_TIME Start                                        >> $MY_LOG_FILE
 # Python 2.7.13:
 wget http://python.org/ftp/python/2.7.13/Python-2.7.13.tar.xz   >> $MY_LOG_FILE
 tar xf Python-2.7.13.tar.xz                                     >> $MY_LOG_FILE
+
+
+# !!! Not done
+exit
+
+
+
+
 cd Python-2.7.13                                                >> $MY_LOG_FILE
 ./configure --prefix=/usr/local --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" >> $MY_LOG_FILE
 make && make altinstall                                         >> $MY_LOG_FILE
