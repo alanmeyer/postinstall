@@ -430,6 +430,31 @@ def main(argv):
                 script_local=folder+"/"+script_name[len("scripts_"):]
                 showexec ("scripts: get "+script_name, "mkdir -p "+folder+" && "+_WGET+" -O "+script_local+" "+my_postinstall+script_name+" && chmod +x "+script_local)
 
+    # Add new users
+    if (config.has_section("users")):
+        for user_op, user_name in config.items("users"):
+            showexec ("users: "+user_name, _USER_ADD+" "+user_name)
+
+    # Add new groups
+    if (config.has_section("groups")):
+        for group_op, group_name in config.items("groups"):
+            showexec ("groups: "+group_name, _GROUP_ADD+" "+group_name)
+
+    # Add an existing user to an existing group
+    if (config.has_section("users groups")):
+        for user_name, group_names in config.items("users groups"):
+            showexec ("users groups: "+user_name, _USER_MOD_GROUP+" "+group_names+" "+user_name)
+
+    # Delete an existing group
+    if (config.has_section("delete groups")):
+        for group_op, group_name in config.items("delete groups"):
+            showexec ("delete groups: "+user_op, _GROUP_DEL+" "+group_name)
+
+    # Delete an existing user
+    if (config.has_section("delete users")):
+        for user_op, user_name in config.items("delete users"):
+            showexec ("delete users: "+user_op, _USER_DEL+" "+user_name)
+
     # Folders
     if (config.has_section("folders")):
         for name, values in config.items("folders"):
@@ -457,31 +482,6 @@ def main(argv):
             if (action_name.startswith("config_")):
                 name=action_name[len("config_"):]
                 showexec ("config: "+name, action_cmd)
-
-    # Add new users
-    if (config.has_section("users")):
-        for user_op, user_name in config.items("users"):
-            showexec ("users: "+user_name, _USER_ADD+" "+user_name)
-
-    # Add new groups
-    if (config.has_section("groups")):
-        for group_op, group_name in config.items("groups"):
-            showexec ("groups: "+group_name, _GROUP_ADD+" "+group_name)
-
-    # Add an existing user to an existing group
-    if (config.has_section("users groups")):
-        for user_name, group_names in config.items("users groups"):
-            showexec ("users groups: "+user_name, _USER_MOD_GROUP+" "+group_names+" "+user_name)
-
-    # Delete an existing group
-    if (config.has_section("delete groups")):
-        for group_op, group_name in config.items("delete groups"):
-            showexec ("delete groups: "+user_op, _GROUP_DEL+" "+group_name)
-
-    # Delete an existing user
-    if (config.has_section("delete users")):
-        for user_op, user_name in config.items("delete users"):
-            showexec ("delete users: "+user_op, _USER_DEL+" "+user_name)
 
     # Parse and exec post-actions
     for action_name, action_cmd in config.items("postactions"):
