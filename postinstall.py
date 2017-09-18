@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+!/usr/bin/env python
 # Alan Meyer
 # https://github.com/alanmeyer/postinstall
 #
@@ -429,6 +429,27 @@ def main(argv):
             if (script_name.startswith("scripts_")):
                 script_local=folder+"/"+script_name[len("scripts_"):]
                 showexec ("scripts: get "+script_name, "mkdir -p "+folder+" && "+_WGET+" -O "+script_local+" "+my_postinstall+script_name+" && chmod +x "+script_local)
+
+    # Folders
+    if (config.has_section("folders")):
+        for name, values in config.items("folders"):
+            if (name.startswith("folders_")):
+                local=name[len("folders_"):]
+                folder, owner, group, rights = values.split(",")
+                showexec ("folders: "+local+" create", "mkdir -p "+folder)
+                showexec ("folders: "+local+" owner:group: "+owner+":"+group, "chown "+owner+":"+group+" "+folder)
+                showexec ("folders: "+local+" rights:      "+rights, "chmod 600 "+folder)
+
+    # Files
+    if (config.has_section("files")):
+        for name, values in config.items("files"):
+            if (name.startswith("files_")):
+                local=name[len("files_"):]
+                name, folder, owner, group, rights = values.split(",")
+                fqname=folder+"/"+name
+                showexec ("file: "+local+" save to:     "+fqname, "mkdir -p "+folder+" && "_WGET+" -O "+fqname+" "+local)
+                showexec ("file: "+local+" owner:group: "+owner+":"+group, "chown "+owner+":"+group+" "+fqname)
+                showexec ("file: "+local+" rights:      "+rights, "chmod 600 "+fqname)
 
     # Config changes
     if (config.has_section("config")):
