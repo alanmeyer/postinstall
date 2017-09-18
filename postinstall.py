@@ -447,7 +447,7 @@ def main(argv):
                 local=fname[len("files_"):]
                 name, folder, owner, group, rights = values.split(",")
                 fqname=folder+"/"+name
-                showexec ("file: "+local+" save to:     "+fqname, "mkdir -p "+folder+" && "+_WGET+" -O "+fqname+" "+local)
+                showexec ("file: "+local+" save to:     "+fqname, "mkdir -p "+folder+" && "+_WGET+" -O "+fqname+" "+fname)
                 showexec ("file: "+local+" owner:group: "+owner+":"+group, "chown "+owner+":"+group+" "+fqname)
                 showexec ("file: "+local+" rights:      "+rights, "chmod "+rights+" "+fqname)
 
