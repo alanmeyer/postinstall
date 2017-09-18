@@ -38,7 +38,7 @@ alias python2.7=/usr/local/bin/python2.7
 echo 'alias python27=/usr/local/bin/python2.7' | tee -a ~/.bashrc
 echo 'alias python2.7=/usr/local/bin/python2.7' | tee -a ~/.bashrc
 
-wget https://bootstrap.pypa.io/get-pip.py
+wget https://bootstrap.pypa.io/get-pip.py -O get-pip.py
 # Then execute it using Python 2.7 and/or Python 3.6:
 #python get-pip.py
 #python2.7 get-pip.py
