@@ -83,6 +83,12 @@ alias python2.7='/usr/local/bin/python2.7'
 alias python27='/usr/local/bin/python2.7'
 alias pip2.7='/usr/local/bin/pip2.7'
 alias pip27='/usr/loca/bin/pip2.7'
+if [ "$USER" = "root" ] ; then
+    alias python='/usr/bin/python'
+else
+    alias python='/usr/local/bin/python2.7'
+    alias pip='/usr/local/bin/pip2.7'
+fi
 
 
 #----------------------------------

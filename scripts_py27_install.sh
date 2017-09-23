@@ -28,8 +28,10 @@ strip /usr/local/lib/libpython2.7.so.1.0                                >> $MY_L
 # Create python2.7 aliases
 alias python27=/usr/local/bin/python2.7                                 >> $MY_LOG_FILE
 alias python2.7=/usr/local/bin/python2.7                                >> $MY_LOG_FILE
-echo 'alias python27=/usr/local/bin/python2.7' | tee -a ~/.bashrc       >> $MY_LOG_FILE
-echo 'alias python2.7=/usr/local/bin/python2.7' | tee -a ~/.bashrc      >> $MY_LOG_FILE
+
+# Moved to .bashrc_common
+#echo 'alias python27=/usr/local/bin/python2.7' | tee -a ~/.bashrc       >> $MY_LOG_FILE
+#echo 'alias python2.7=/usr/local/bin/python2.7' | tee -a ~/.bashrc      >> $MY_LOG_FILE
 
 # Download pip
 wget https://bootstrap.pypa.io/get-pip.py -O get-pip.py                 >> $MY_LOG_FILE
@@ -38,8 +40,10 @@ python2.7 get-pip.py                                                    >> $MY_L
 
 alias pip27=/usr/local/bin/pip2.7                                       >> $MY_LOG_FILE
 alias pip2.7=/usr/local/bin/pip2.7                                      >> $MY_LOG_FILE
-echo 'alias pip27=/usr/local/bin/pip2.7' | tee -a ~/.bashrc             >> $MY_LOG_FILE
-echo 'alias pip2.7=/usr/local/bin/pip2.7' | tee -a ~/.bashrc            >> $MY_LOG_FILE
+
+# Moved to .bashrc_common
+#echo 'alias pip27=/usr/local/bin/pip2.7' | tee -a ~/.bashrc             >> $MY_LOG_FILE
+#echo 'alias pip2.7=/usr/local/bin/pip2.7' | tee -a ~/.bashrc            >> $MY_LOG_FILE
 
 pip2.7 install --upgrade pip                                            >> $MY_LOG_FILE
 pip2.7 install cryptography                                             >> $MY_LOG_FILE
