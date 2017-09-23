@@ -3,10 +3,8 @@
 # Alan Meyer
 # https://github.com/alanmeyer/postinstall
 
-# Called by cron
-# crontab -e to edit when called
-
-MY_LOG_FILE=~/scripts/py27_install.log
+MY_SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+MY_LOG_FILE="$MY_SCRIPT_DIR"/py27_install.log
 MY_DATE=`date +"%Y-%m-%d"`
 MY_TIME=`date +"%T"`
 MY_DATE_TIME="$MY_DATE"" ""$MY_TIME"
@@ -14,7 +12,7 @@ MY_DATE_TIME="$MY_DATE"" ""$MY_TIME"
 echo $MY_DATE_TIME Start                                                >> $MY_LOG_FILE
 # https://danieleriksson.net/2017/02/08/how-to-install-latest-python-on-centos/
 # Python 2.7.13:
-wget http://python.org/ftp/python/2.7.13/Python-2.7.13.tar.xz -O Python-2.713.tar.xz                        >> $MY_LOG_FILE
+wget http://python.org/ftp/python/2.7.13/Python-2.7.13.tar.xz -O Python-2.7.13.tar.xz                        >> $MY_LOG_FILE
 tar xf Python-2.7.13.tar.xz                                             >> $MY_LOG_FILE
 
 cd Python-2.7.13                                                        >> $MY_LOG_FILE
